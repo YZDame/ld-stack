@@ -1,6 +1,6 @@
 ---
 name: math-exposition-latex
-description: Write or revise Chinese mathematical lecture notes, textbook-style chapters, competition handouts, and LaTeX mini-papers with precise definitions, hypotheses, proofs, examples, and exercises. Use for requests such as 数学讲义、教材式书写、规范数学语言、Evan Chen 模板、LaTeX/PDF, or turning a mathematical conversation into a reusable exposition. Preserve the user's mathematical main thread and distinguish geometric arguments from analytical extensions.
+description: Write or revise Chinese mathematical lecture notes, textbook-style chapters, competition handouts, and LaTeX mini-papers with precise definitions, hypotheses, proofs, examples, and exercises. Use for requests such as 数学讲义、教材式书写、规范数学语言、Evan Chen 模板、LaTeX/PDF, or turning a mathematical conversation into a reusable exposition. Preserve the user's mathematical main thread and distinguish geometric arguments from analytical extensions. Owns structure and LaTeX: the mathematical main thread, definitions/theorems/proofs, notation, and templates. For sentence-level wording, tone, and removing AI-flavored prose in 讲义/教案/例题解析, use math-lecture-notes-style alongside it.
 ---
 
 # Mathematical Exposition and LaTeX
