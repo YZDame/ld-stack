@@ -1,0 +1,86 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper,fontset=fandol]{ctexart}
+
+\usepackage{amsmath,amssymb,amsthm,geometry}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=2cm}
+\renewcommand{\proofname}{证明}
+
+\theoremstyle{definition}
+\newtheorem{definition}{定义}
+\newtheorem{example}{例}
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}
+\newtheorem{lemma}{引理}
+\newtheorem{proposition}{命题}
+\theoremstyle{remark}
+\newtheorem*{remark}{注}
+
+\title{微专题讲义标题}
+\author{LeyuDame}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{问题引入}
+
+从具体现象、典型问题或简单数值实验切入，阐明本节要解决的问题，避免空洞导读。
+
+\section{预备知识与核心推导}
+
+此处只引入后文真正使用的定义、记号与引理。每引入新记号须当场说明含义与范围。
+
+\begin{theorem}
+写明前提条件与确切结论；如有边界或例外情形一并交代。
+\end{theorem}
+
+\begin{proof}
+先用一两句话点出关键思路，再给出完整、不跳步的推导。
+\end{proof}
+
+\begin{remark}
+说明某个条件去掉后为何失效，或给出最易混淆处的简短提醒（一两句即可）。
+\end{remark}
+
+\section{典型例题}
+
+\begin{example}
+写出清晰、自足的题目陈述。
+\end{example}
+
+\noindent\textbf{思路.}\quad 仅在关键转折处用一两句点破如何想到这一步转化（直白题可省略）。
+
+\begin{proof}[解]
+完整给出推理过程、边界讨论与最终结论。
+\end{proof}
+
+\noindent\textbf{点评.}\quad 仅当本题揭示可迁移条件或常见误区时附一两句说明（不必每题强附）。
+
+\begin{example}
+综合或变式问题。
+\end{example}
+
+\begin{proof}[解]
+结合前一结论自然推演。
+\end{proof}
+
+\section{练习}
+
+\begin{enumerate}
+  \item 检验定理条件或边界情形的基础题。
+  \item 考查同一方法在不同对象上迁移的变式题。
+\end{enumerate}
+
+\appendix
+\section{练习参考解答}
+
+\begin{enumerate}
+  \item 简要而完整的解答。
+  \item 简要而完整的解答。
+\end{enumerate}
+
+\end{document}

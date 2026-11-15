@@ -1,8 +1,8 @@
-# 外部内容（Third-party Content）
+# 外部内容与许可说明（Third-party Content）
 
 ## `skills/math-olympiad`
 
-- 随 `ta-skills` 插件安装：是
+- 随 `ld-stack` 插件安装：是
 - 上游作者：Anthropic
 - 上游项目：<https://github.com/anthropics/claude-plugins-official>
 - 上游目录：<https://github.com/anthropics/claude-plugins-official/tree/main/plugins/math-olympiad>
@@ -10,24 +10,14 @@
 - 许可证：Apache License 2.0；全文见 [`skills/math-olympiad/LICENSE`](skills/math-olympiad/LICENSE)
 - 修改说明：见 [`skills/math-olympiad/UPSTREAM.md`](skills/math-olympiad/UPSTREAM.md)
 
-这些文件属于 Anthropic 的外部内容。根目录的 Apache License 2.0 适用于本仓库原创内容，不会把外部内容重新许可为本仓库原创作品。
+这些文件属于 Anthropic 的外部内容。根目录的 Apache License 2.0 适用于本仓库原创内容，不会改变外部内容原有许可。
 
-## `vendor-skills/mineru-ai`
-
-- 随 `ta-skills` 插件安装：否
-- 上游项目：<https://github.com/MinerU-Extract/mineru-ai>
-- 本仓库内容：上游链接和安装提示
-- 许可状态：截至 2026-08-25，上游仓库仅公开 `SKILL.md`，没有可见的仓库许可证文件
-
-因此，本仓库不复制 `mineru-ai` 的完整 Skill。需要使用时应从上游项目获取，并遵守上游后续公布的许可条件。
-
-## `skills/math-exposition-latex/assets/evan.sty`
+## `skills/math-exposition/assets/evan.sty`
 
 - 上游作者：Evan Chen
 - 上游项目：<https://github.com/vEnhance/dotfiles>
-- 使用版本：`evan-legacy.sty`（2019 兼容版）
-- 来源：<https://github.com/vEnhance/dotfiles/blob/main/texmf/tex/latex/evan/evan-legacy.sty>
-- 许可：Boost Software License 1.0；许可声明见 [`assets/LICENSE.evan.txt`](skills/math-exposition-latex/assets/LICENSE.evan.txt)，上游当前 `evan.sty` 文件头载明此许可。
-- 本地修改：中文化定理、引理、例题等环境名称，并保留来源说明。
+- 使用版本：`evan.sty`（2025 版，包含 XeLaTeX/LuaLaTeX 中文兼容适配）
+- 来源：<https://github.com/vEnhance/dotfiles/blob/main/texmf/tex/latex/evan/evan.sty>
+- 许可：Boost Software License 1.0；完整声明见 `evan.sty` 文件头与 [`assets/LICENSE.evan.txt`](skills/math-exposition/assets/LICENSE.evan.txt)
 
 根目录 Apache License 2.0 不替代 Evan 模板的许可。

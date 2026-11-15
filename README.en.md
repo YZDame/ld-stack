@@ -1,109 +1,51 @@
-# TA Skills (Teacher Agent Skills)
+# LD Stack
 
-An AI teaching assistant for teachers: a practical teaching skills bundle.
+Focused reusable Agent Skills for mathematical exposition, document OCR, geometry diagram synthesis, and olympiad reasoning.
 
 [中文](README.md)
 
-TA Skills turns handout authoring, teaching-material digitization, OCR, mathematical exposition, geometry generation, and olympiad problem solving into reusable [Agent Skills](https://agentskills.io/). Its current workflows use LaTeX as a core material format and can be adapted to many subjects and teaching settings.
+LD Stack (streamlined from `ta-skills`) keeps workspace-specific rules (directory layout, template paths, PR conventions) inside each repository's `AGENTS.md`, while packaging 4 high-signal, cross-project Skills.
 
-## Quick Start
+## Core Skills (4 total)
 
-The options below cover Codex, Claude Code, Trae Work, WorkBuddy, Doubao Work, Qwen Office, and DeepSeek Harness. Choose the method supported by your current agent: plugin installation, the Skills CLI, or a local Skills directory.
-
-### Install by prompt (recommended)
-
-Send this prompt to the agent you are using:
-
-```text
-Install the teaching skills from https://github.com/YZDame/ta-skills. Read README.md and THIRD_PARTY.md first, then list the Skills under skills/ and explain what each one does so I can choose what to install. If this environment supports plugins, run npx plugins add YZDame/ta-skills. If it supports the Skills CLI, run npx skills add YZDame/ta-skills. If it only provides a Skills page or local Skills directory, import each selected complete Skill folder rather than copying SKILL.md alone. After installation, verify that each SKILL.md is discoverable, identify math-olympiad as content sourced from Anthropic, and report any APIs or local software that still need configuration.
-```
-
-This method works well with WorkBuddy, Doubao Work, Qwen Office, and other agents that can read a GitHub repository or run installation commands.
-
-### Install the complete plugin from the command line
-
-In an environment that supports the Plugins CLI, run:
-
-```bash
-npx plugins add YZDame/ta-skills
-```
-
-The installer should identify the plugin as `ta-skills` and discover all five included Skills.
-
-### Install one Skill from the command line
-
-```bash
-npx skills add YZDame/ta-skills --skill tsqx-gen
-```
-
-Replace `tsqx-gen` with another name from the tables below. To target a specific agent, use:
-
-```bash
-npx skills add YZDame/ta-skills -a <agent-name>
-```
-
-This method works with Codex, Claude Code, Trae Work, and other agents supported by the Skills CLI.
-
-### Import manually
-
-Download and extract the repository ZIP, then import a complete Skill directory from [`skills/`](skills/). A Skill may include scripts, references, and templates, so do not copy `SKILL.md` by itself.
-
-WorkBuddy, Doubao Work, and Qwen Office can import Skills through their Skills pages. For DeepSeek Harness, place each selected directory under the project-level `.agents/skills/` or its user-level Skills directory.
-
-## Plugin Contents
-
-### Original Skills in this repository
-
-| Skill | Purpose |
-| --- | --- |
-| [`digitize-math-lectures`](skills/digitize-math-lectures/) | Recover boards, exams, olympiad-solution manuscripts, scans, PDFs, lecture notes, and existing LaTeX as editable teaching materials ready for review. |
-| [`math-exposition-latex`](skills/math-exposition-latex/) | Write textbook-style Chinese mathematics notes, short handouts, mini-lectures, expository articles, and technical notes. |
-| [`math-lecture-notes-style`](skills/math-lecture-notes-style/) | Language rules for writing or revising Chinese math notes, lesson plans, and worked examples in a textbook voice, without AI-style prose. |
-| [`mistral-ocr`](skills/mistral-ocr/) | Use Mistral OCR with PDFs, scanned pages, images, and public document URLs. |
-| [`tsqx-gen`](skills/tsqx-gen/) | Generate and check TSQX geometry code from problems, images, or written descriptions. |
-
-### Bundled external Skill
-
-| Skill | Purpose and source |
-| --- | --- |
-| [`math-olympiad`](skills/math-olympiad/) | Solve and verify olympiad mathematics problems. Sourced from [Anthropic's official plugin repository](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/math-olympiad) under Apache License 2.0; see [`UPSTREAM.md`](skills/math-olympiad/UPSTREAM.md) for the pinned revision and modification notice. |
-
-### External Skill available by source link only
-
-[`mineru-ai`](vendor-skills/mineru-ai/) currently contains only its upstream link and installation notes. Its upstream repository does not provide clear redistribution terms, so this repository does not copy the complete Skill.
-
-See [THIRD_PARTY.md](THIRD_PARTY.md) for the provenance and licensing boundaries of all external content.
-
-## Workflow and Responsibilities
-
-| Work | Responsible Skill | Delivery boundary |
+| Skill | Origin | Purpose |
 | --- | --- | --- |
-| Reliable extraction from PDFs, scans, and images | [`mistral-ocr`](skills/mistral-ocr/) or another OCR Skill | Preserve raw responses and page-level candidates; do not decide mathematical correctness or final wording. |
-| Digitizing boards, manuscripts, and source materials | [`digitize-math-lectures`](skills/digitize-math-lectures/) | Recover and edit content, produce LaTeX deliverables, and manage review from `REVIEW_REQUIRED` to `APPROVED`. |
-| Editing olympiad manuscripts, terse solutions, or mixed sources | `olympiad-solution-digitization` in `digitize-math-lectures` | Preserve and complete the source route by default, produce a compact answer booklet, and retain failed routes for review. |
-| Newly authored handouts, lectures, and articles | [`math-exposition-latex`](skills/math-exposition-latex/) | Select `short-handout`, `mini-lecture`, `mini-paper`, or `technical-note`; do not take over scan digitization. |
+| [`math-exposition`](skills/math-exposition/) | Original (merged) | Textbook-grade Chinese mathematics handouts and mini-papers: mathematical main thread, anti-AI-prose style, LaTeX typesetting, and 2025 `evan.sty` support. |
+| [`doc-ocr`](skills/doc-ocr/) | Original (upgraded) | Multi-provider OCR router and chunk assembler across PaddleOCR-VL, MinerU, Mistral OCR, and Gemini (pure Python standard library). |
+| [`tsqx-gen`](skills/tsqx-gen/) | Original (streamlined) | Declarative olympiad geometry diagram generation (`tsqx -> asy -> pdf`) with Evan Chen handout idioms and few-shots. |
+| [`math-olympiad`](skills/math-olympiad/) | Upstream external | Competition math solving and proof verification sourced from Anthropic's official plugin repository under Apache-2.0 ([`UPSTREAM.md`](skills/math-olympiad/UPSTREAM.md)). |
 
-Solutions and short handouts share a compact editorial style: state the problem, add one to five sentences of decisive strategy only when useful, then give the formal solution. Commentary appears only when it has genuine transfer value. OCR uncertainty and authored-completion records stay in the review trail rather than the student-facing document.
+See [THIRD_PARTY.md](THIRD_PARTY.md) for third-party attribution and licensing details.
 
-## Runtime Requirements
+## Installation
 
-Skills define workflows; some capabilities require additional tools:
+Mount directly via relative symlinks in your workspace `.agents/skills/`:
 
-| Capability | Requirement |
-| --- | --- |
-| Mistral OCR | `MISTRAL_API_KEY` |
-| LaTeX authoring and compilation | A local LaTeX environment |
-| TSQX generation and verification | TSQX and Asymptote; not required when only generating source code |
-| Document digitization | OCR, PDF conversion, or figure-reconstruction tools selected for the source material |
+```bash
+ln -sfn ../../ld-stack/skills/math-exposition .agents/skills/math-exposition
+ln -sfn ../../ld-stack/skills/doc-ocr .agents/skills/doc-ocr
+ln -sfn ../../ld-stack/skills/tsqx-gen .agents/skills/tsqx-gen
+ln -sfn ../../ld-stack/skills/math-olympiad .agents/skills/math-olympiad
+```
 
-## Repository Layout
+Or install via Plugins / Skills CLI:
+
+```bash
+npx plugins add YZDame/ld-stack
+npx skills add YZDame/ld-stack --skill math-exposition
+```
+
+## Layout
 
 ```text
-ta-skills/
+ld-stack/
 ├── .codex-plugin/plugin.json
 ├── .claude-plugin/plugin.json
 ├── skills/
-├── vendor-skills/
+│   ├── math-exposition/
+│   ├── doc-ocr/
+│   ├── tsqx-gen/
+│   └── math-olympiad/
 ├── README.md
 ├── README.en.md
 ├── LICENSE
@@ -112,4 +54,4 @@ ta-skills/
 
 ## License
 
-Original content in this repository is licensed under the [Apache License 2.0](LICENSE). The root license does not replace the license terms of external content; external Skills remain governed by their bundled license files and [THIRD_PARTY.md](THIRD_PARTY.md).
+First-party content is licensed under the [Apache License 2.0](LICENSE). Third-party skills and `evan.sty` keep their original licenses (see [THIRD_PARTY.md](THIRD_PARTY.md)).

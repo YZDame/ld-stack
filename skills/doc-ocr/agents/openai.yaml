@@ -1,0 +1,4 @@
+interface:
+  display_name: "Document OCR"
+  short_description: "Multi-provider OCR router & assembler for PDFs, scans, and handwritten notes"
+  default_prompt: "Use $doc-ocr to inspect available OCR backends, extract source-faithful Markdown and figures from this document, and assemble multi-page results cleanly."

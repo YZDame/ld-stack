@@ -1,0 +1,13 @@
+interface:
+  display_name: "Math Exposition"
+  short_description: 教材级中文数学讲义与微专题写作、去 AI 腔规范与 LaTeX 排版
+  default_prompt: 使用 $math-exposition，把这个数学主题写成教材式中文讲义：把握主线、规范数学语言与记号（去 AI 腔），按工作区规范或模板排版并验证编译结果。
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

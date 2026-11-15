@@ -1,0 +1,32 @@
+{
+  "providers": {
+    "paddleocr": {
+      "job_url": "https://paddleocr.aistudio-app.com/api/v2/ocr/jobs",
+      "api_key_env": "PADDLE_OCR_API_KEY",
+      "model": "PaddleOCR-VL-1.6",
+      "poll_interval_seconds": 5,
+      "poll_timeout_seconds": 1800,
+      "optional_payload": {
+        "useDocOrientationClassify": false,
+        "useDocUnwarping": false,
+        "useChartRecognition": false
+      }
+    },
+    "mineru": {
+      "mode": "precision",
+      "model": "pipeline",
+      "language": "ch",
+      "timeout": 1800
+    },
+    "mistral": {
+      "api_key_env": "MISTRAL_API_KEY",
+      "model": "mistral-ocr-latest",
+      "delete_uploaded_file": true
+    },
+    "gemini": {
+      "api_key_env": "GEMINI_API_KEY",
+      "model": "gemini-3.5-flash",
+      "inline_limit_bytes": 52428800
+    }
+  }
+}

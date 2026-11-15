@@ -1,106 +1,73 @@
-# TSQX Idioms
+# TSQX Idioms, Parsing Checklist & Style Guide
 
-Use this file to stay close to the style and capability boundaries seen in `../tsqx/examples` and real local usage under `../tsqx/personal`.
+Combine careful geometric parsing with concise, standard TSQX constructions before considering raw Asymptote (`!`).
 
-## Construction Priorities
+---
+
+## 1. Geometry Parsing Checklist
+
+Before writing TSQX, extract from the problem statement and/or reference image:
+
+- Named points (keep exact problem labels) and free vs. constructed points
+- Collinear, parallel, perpendicular, equal-length, and equal-angle relations
+- Circles, tangencies, and concyclic points
+- Midpoints, feet of altitudes/perpendiculars, centroids, circumcenters, incenters, orthocenters
+- Extension points on rays or lines (`extension A B C D`)
+- Shaded or highlighted regions and label positions that must remain collision-free
+
+Verify:
+1. Which points are primitive (`dir` angles or explicit coordinates) and which are derived?
+2. Which relations are mathematically exact vs. merely incidental in a sketch? Do not encode unstated equalities or perpendicularities.
+3. Does the chosen primitive configuration avoid accidental collinearities or awkward obtuse overlaps?
+
+---
+
+## 2. Construction Priorities
 
 Prefer these layers in order:
 
-1. Free anchor points with explicit coordinates or `dir`
-2. Standard derived points using TSQX built-ins
-3. Intersections and extensions
-4. Circles and highlighted paths
-5. Raw Asymptote injected with `!` only when TSQX syntax is not enough
+1. **Free anchor points**: `A = dir 110`, `B = dir 210`, `C = dir 330` (on unit circle) or explicit coordinates when exact constraints demand it.
+2. **Standard TSQX built-ins**:
+   - `midpoint A--B`
+   - `foot P A B`
+   - `incenter A B C`, `orthocenter A B C`, `circumcenter A B C`, `centroid A B C`
+   - `extension A B C D`
+   - `incircle A B C`, `circumcircle A B C`
+3. **Line/circle intersections**:
+   - `IP (Line A B) (Line C D)`
+   - `OP path (Line A B)` (the *other* intersection besides a shared vertex)
+4. **Drawing & visual hierarchy**: Draw the main polygon first, auxiliary segments in `grey`/`gray` or `dashed`, then circles and highlighted loci sparingly in `blue`/`red`/`deepgreen`.
+5. **Raw Asymptote escape hatch (`!`)**: Use `!pair` or `!path` helpers only when pure TSQX built-ins cannot express the step (e.g., `rotate(90)*(B-H)` for perpendicular lines, explicit tangent helpers).
 
-## Common Built-ins Seen In Practice
+---
 
-- `midpoint A--B`
-- `foot P A B`
-- `incenter A B C`
-- `orthocenter A B C`
-- `circumcenter A B C`
-- `extension A B C D`
-- `IP (Line A B) (Line C D)`
-- `OP path (Line A B)`
-- `incircle A B C`
-- `circumcircle A B C`
+## 3. Evan Chen Style & Label Conventions
 
-These are the first options to try before injecting raw Asymptote.
+- Prefer compact declarative TSQX (`dir` points -> derived centers/feet -> extensions -> clean path strokes) over coordinate-heavy algebra.
+- Add direction hints (angles `0`–`359` or `N`/`NW`/`SE`) on points whenever labels risk overlapping lines or circles:
+  - `I 315 = incenter A B C`
+  - `H NW = orthocenter A B C`
+  - `D 220 ;= midpoint B--C` (`:=` / `;=` to suppress or style dots/labels appropriately)
+- Typical drawing patterns:
+  ```tsqx
+  A--B--C--cycle / 0.1 lightcyan / blue
+  incircle A B C / blue
+  M--K / red
+  N--P--M / red dashed
+  ```
+- Keep code compact yet readable; isolate nontrivial vector math in short `!` helpers:
+  ```tsqx
+  !path circleO = circumcircle(A, I, B);
+  P 180 = OP circleO (Line C A)
+  !pair pBH = H + rotate(90)*(B-H);
+  D 140 ;= extension A B H pBH
+  ```
 
-## Label And Dot Conventions
+---
 
-Observed patterns:
+## 4. Common Failure Modes to Avoid
 
-- `A = dir 110`
-- `I 45 = incenter A B C`
-- `H NW = orthocenter A B C`
-- `D 220 ;= midpoint B--C`
-
-Guidance:
-
-- Keep the original point names from the problem if possible.
-- Add direction hints when labels are likely to overlap.
-- Use `:=` or `;=` only when that improves label or dot behavior and the example pattern clearly matches.
-
-## Drawing Conventions
-
-Common patterns from local examples:
-
-```tsqx
-A--B--C--cycle / 0.08 lightyellow / grey
-D--E--F--cycle / 0.15 lightcyan / red
-A--D / gray
-circleO / gray
-N--P--M / red dashed
-```
-
-Guidance:
-
-- Draw the main polygon first.
-- Then draw auxiliary lines.
-- Then draw circles or highlighted relations.
-- Use color sparingly to indicate logical role, not decoration.
-
-## When To Use Raw Asymptote
-
-Use `!` blocks when you need:
-
-- helper functions
-- explicit `path` or `pair` objects
-- tangent constructions not expressible cleanly in TSQX alone
-- vector arithmetic such as `rotate(90) * (B-A)`
-
-Examples from real usage:
-
-```tsqx
-!path w = circumcircle(A, B, C);
-!pair pBH = H + rotate(90)*(B-H);
-!pair O1 = solveCenterThroughTwoPtsTangentLine(B, P, A, C, true);
-```
-
-Do not jump to raw Asymptote too early. First ask whether a built-in TSQX construction already exists.
-
-## Faithfulness Rules
-
-- Preserve incidence before exact metric appearance.
-- Prefer a simple valid model over a visually perfect but overconstrained one.
-- If the diagram is only suggestive, avoid hard-coding guessed equalities or perpendicularities.
-- When a problem uses a line extension, represent the extension explicitly instead of faking the point with arbitrary coordinates.
-
-## Typical Pattern Families
-
-### Triangle Center Figures
-
-Use free points for `A B C`, then derive `I`, `H`, `G`, or `O`.
-
-### Foot And Altitude Figures
-
-Use `foot` first. If the statement gives a perpendicular line through a derived point, use a helper `!pair` with `rotate(90)`.
-
-### Circle-Line Intersection Figures
-
-Represent the circle as `!path` and use `IP` or `OP` against `Line`.
-
-### Handout-Style Composite Figures
-
-Keep the construction readable. It is acceptable to mix TSQX with small injected Asymptote helpers when the geometry is genuinely more complex.
+- Encoding a diagram guess as a hard geometric constraint
+- Choosing free angles (`dir ...`) that create unintended degeneracy or cluttered label intersections
+- Reaching for `!pair`/`!path` boilerplate when `incircle`, `foot`, `midpoint`, or `extension` already handles it cleanly
+- Reproducing a proof's auxiliary lines when the prompt only asks for the problem figure (unless explicitly requested)

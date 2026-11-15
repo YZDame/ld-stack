@@ -1,10 +1,8 @@
 # Few-Shot Patterns
 
-Use these examples as style anchors. Do not copy coordinates blindly; copy the construction strategy.
+Use these examples as style anchors. Copy the construction strategy and visual hierarchy rather than blindly freezing coordinates.
 
 ## 1. Triangle + Incenter + Incircle
-
-Source pattern: `../tsqx/examples/figures/fig1.tsqx`
 
 ```tsqx
 A = dir 110
@@ -19,11 +17,9 @@ B--I / red
 C--I / red
 ```
 
-Use this pattern when the statement centers on a standard triangle center and one canonical circle.
+Use when the figure centers on a standard triangle center and canonical circle.
 
 ## 2. Orthocenter + Pedal Triangle
-
-Source pattern: `../tsqx/examples/figures/fig2.tsqx`
 
 ```tsqx
 A = dir 95
@@ -41,11 +37,7 @@ B--E / gray
 C--F / gray
 ```
 
-Use this pattern when a point is defined first, then several feet are dropped to sides.
-
-## 3. Circle Through Given Points With Line Intersections
-
-Source pattern: `../tsqx/personal/week_02_20260313/blue-ch01-p3.tsqx`
+## 3. Circle Through Given Points Meeting Lines Again (`!path` + `OP`)
 
 ```tsqx
 C = dir 110
@@ -58,11 +50,7 @@ P 180 = OP circleO (Line C A)
 Q 0 = OP circleO (Line C B)
 ```
 
-Use this pattern when a derived circle must meet known lines again.
-
-## 4. Perpendicular Helper Line Via Raw Asymptote
-
-Source pattern: `../tsqx/personal/handout/Mon_3/images/blue-ch01-p8.tsqx`
+## 4. Perpendicular Helper Line Via Raw Asymptote (`!pair` + `rotate(90)`)
 
 ```tsqx
 H 270 ;= orthocenter A B C
@@ -70,28 +58,43 @@ H 270 ;= orthocenter A B C
 D 140 ;= extension A B H pBH
 ```
 
-Use this when the statement says "through point X draw a line perpendicular to YZ" and plain TSQX syntax alone is awkward.
+## 5. Evan Handout: The Iran Incenter Lemma (`GeoSlang-03`)
 
-## 5. Tangent-Circle Or Mixed TSQX/Asymptote Figure
+Source context: Evan Chen `GeoSlang` handout — incenter $I$, contact points $D, E, F$, midpoints $M, N$, intersection $K = MN \cap EF$ with $BK \perp CK$.
 
-Source pattern: `../tsqx/personal/week_02_20260313/2025p1.tsqx`
+```tsqx
+A = dir 130
+B = dir 210
+C = dir 330
+I 315 = incenter A B C
+D = foot I B C
+E 70 = foot I C A
+F = foot I A B
+M = midpoint B--C
+N = midpoint C--A
+K = extension M N E F
+A--B--C--cycle / 0.1 lightcyan / blue
+incircle A B C / blue
+M--K / red
+F--K / red
+B--K--C / red
+```
 
-Observed strategy:
+## 6. Evan Handout: The Shooting Lemma / Death Star Lemma (`GeoSlang-04`)
 
-- keep the main named construction in TSQX
-- isolate hard geometry into small `!pair` or helper functions
-- return to TSQX-style drawing commands for the main figure
+Source context: Evan Chen `GeoSlang` handout — chord $AB$ of the unit circle, midpoint $M$ of minor arc $AB$, point $T$ on major arc, $K = MT \cap AB$, and tangent circle `CP P K`.
 
-Use this pattern for advanced olympiad-style diagrams where a pure TSQX encoding would become less readable than a hybrid approach.
-
-## 6. Explicit Coordinates For Strict Constraint Satisfaction
-
-Source pattern: `../tsqx/personal/week_02_20260313/2025gd.tsqx`
-
-Observed strategy:
-
-- choose coordinates directly when exact problem constraints matter more than synthetic elegance
-- annotate why those coordinates were chosen
-- derive the remaining points from the stated conditions
-
-Use this when the figure must satisfy algebraic constraints exactly and a synthetic construction would be harder to control.
+```tsqx
+A = dir 170
+B = dir 10
+M = dir 270
+T = dir 55
+K 315 = extension M T A B
+unitcircle / 0.1 cyan / blue
+V := K+dir(90)
+P = extension origin T K V
+CP P K / 0.1 yellow / deepgreen
+A--B / blue
+M--T / red
+B--M--A / grey
+```

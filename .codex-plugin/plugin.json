@@ -1,29 +1,29 @@
 {
-  "name": "ta-skills",
-  "version": "0.2.0",
-  "description": "Reusable Agent Skills for teaching-material authoring, digitization, OCR, mathematical exposition, geometry generation, and olympiad problem solving.",
+  "name": "ld-stack",
+  "version": "0.3.0",
+  "description": "Reusable Agent Skills for Chinese mathematical exposition, multi-provider document OCR, TSQX geometry diagrams, and olympiad problem solving.",
   "author": {
     "name": "YZDame",
     "url": "https://github.com/YZDame"
   },
-  "homepage": "https://github.com/YZDame/ta-skills",
-  "repository": "https://github.com/YZDame/ta-skills",
+  "homepage": "https://github.com/YZDame/ld-stack",
+  "repository": "https://github.com/YZDame/ld-stack",
   "license": "Apache-2.0",
   "keywords": [
     "education",
     "teaching",
-    "teacher-agent",
-    "teaching-assistant",
+    "mathematics",
     "latex",
     "ocr",
-    "mathematics",
-    "geometry"
+    "tsqx",
+    "geometry",
+    "olympiad"
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "TA Skills",
-    "shortDescription": "Practical skills for teacher agents and teaching assistants.",
-    "longDescription": "Create teaching handouts, digitize source materials, run OCR, write mathematical exposition, generate geometry diagrams, and solve olympiad problems with reusable Agent Skills.",
+    "displayName": "LD Stack",
+    "shortDescription": "Core Agent Skills for math teaching, LaTeX exposition, OCR, and geometry.",
+    "longDescription": "Streamlined Agent Skills collection for textbook-grade Chinese mathematics handouts, multi-provider OCR routing & assembly, TSQX geometry generation, and olympiad problem solving.",
     "developerName": "YZDame",
     "category": "Productivity",
     "capabilities": [
@@ -31,11 +31,11 @@
       "Write",
       "Execute"
     ],
-    "websiteURL": "https://github.com/YZDame/ta-skills",
+    "websiteURL": "https://github.com/YZDame/ld-stack",
     "defaultPrompt": [
-      "把这份扫描讲义整理成可校对的 LaTeX 项目。",
-      "为高中生编写一份中文数学专题讲义。",
-      "根据这道几何题生成并检查示意图。"
+      "使用 $math-exposition 为高中数学专题编写教材式中文讲义。",
+      "使用 $doc-ocr 将扫描讲义或手写板书识别并组装成可校对的 Markdown。",
+      "使用 $tsqx-gen 根据这道平面几何题生成 TSQX 图形代码。"
     ],
     "brandColor": "#2563EB"
   }

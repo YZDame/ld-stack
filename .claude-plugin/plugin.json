@@ -1,22 +1,22 @@
 {
-  "name": "ta-skills",
-  "version": "0.2.0",
-  "description": "Reusable Agent Skills for teaching-material authoring, digitization, OCR, mathematical exposition, geometry generation, and olympiad problem solving.",
+  "name": "ld-stack",
+  "version": "0.3.0",
+  "description": "Reusable Agent Skills for Chinese mathematical exposition, multi-provider document OCR, TSQX geometry diagrams, and olympiad problem solving.",
   "author": {
     "name": "YZDame",
     "url": "https://github.com/YZDame"
   },
-  "homepage": "https://github.com/YZDame/ta-skills",
-  "repository": "https://github.com/YZDame/ta-skills",
+  "homepage": "https://github.com/YZDame/ld-stack",
+  "repository": "https://github.com/YZDame/ld-stack",
   "license": "Apache-2.0",
   "keywords": [
     "education",
     "teaching",
-    "teacher-agent",
-    "teaching-assistant",
+    "mathematics",
     "latex",
     "ocr",
-    "mathematics",
-    "geometry"
+    "tsqx",
+    "geometry",
+    "olympiad"
   ]
 }
