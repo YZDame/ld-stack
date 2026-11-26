@@ -1,100 +1,155 @@
 # Few-Shot Patterns
 
-Use these examples as style anchors. Copy the construction strategy and visual hierarchy rather than blindly freezing coordinates.
+Use these tested examples as style and construction anchors. Copy the semantic layering and assertion discipline rather than freezing coordinates blindly.
 
-## 1. Triangle + Incenter + Incircle
+## 1. Triangle + Incenter + Incircle (Themed + Asserted)
 
 ```tsqx
-A = dir 110
-B = dir 210
-C = dir 330
+~triangle A B C
 I 45 = incenter A B C
+D 270 = foot I B C
+E 30 = foot I C A
+F 150 = foot I A B
+!check_perp(I, D, B, C, "ID perp BC");
+!check_equal_dist(I, D, I, E, "ID = IE");
 
-A--B--C--cycle / 0.12 lightcyan / blue
-incircle A B C / 0.15 lightgreen / darkgreen
-A--I / red
-B--I / red
-C--I / red
+A--B--C--cycle / fill1 / given
+incircle A B C / fill2 / circ2
+A--I / aux
+B--I / aux
+C--I / aux
+I--D / key
+I--E / key
+I--F / key
+rightanglemark I D C / mark
 ```
 
-Use when the figure centers on a standard triangle center and canonical circle.
-
-## 2. Orthocenter + Pedal Triangle
+## 2. Orthocenter + Orthic Triangle + Euler Line
 
 ```tsqx
-A = dir 95
+A = dir 105
 B = dir 215
 C = dir 330
-H = orthocenter A B C
-D = foot H B C
-E = foot H C A
-F = foot H A B
+O 15 = circumcenter A B C
+H 165 = orthocenter A B C
+G 290 = centroid A B C
+D 270 = foot H B C
+E 30 = foot H C A
+F 150 = foot H A B
+!check_perp(A, D, B, C, "AD perp BC");
+!check_collinear(O, G, H, "Euler line O-G-H");
 
-A--B--C--cycle / 0.08 lightyellow / blue
-D--E--F--cycle / 0.15 lightcyan / red
-A--D / gray
-B--E / gray
-C--F / gray
+circumcircle A B C / circ
+A--B--C--cycle / fill1 / given
+D--E--F--cycle / fill2 / accent
+A--D / aux
+B--E / aux
+C--F / aux
+O--H / key
+rightanglemark A D C / mark
 ```
 
-## 3. Circle Through Given Points Meeting Lines Again (`!path` + `OP`)
+## 3. Symmedian, Tangents & Safe Second Intersection (`perpPt` + `otherPt`)
 
 ```tsqx
-C = dir 110
-A = dir 200
-B = dir 320
-I N = incenter A B C
-O 90 = circumcenter A I B
-!path circleO = circumcircle(A, I, B);
-P 180 = OP circleO (Line C A)
-Q 0 = OP circleO (Line C B)
+A = dir 112
+B = dir 210
+C = dir 330
+O 15 = circumcenter A B C
+M 235 = midpoint B--C
+!path w = circumcircle(A, B, C);
+T 270 = extension B (perpPt B O B) C (perpPt C O C)
+K 245 = otherPt w A T
+D 300 = otherPt w A M
+!check_perp(O, B, B, T, "OB perp BT");
+!check_on_circle(K, O, A, "K on circumcircle");
+
+w / circ
+A--B--C--cycle / fill1 / given
+O--B / aux2
+O--C / aux2
+B--T--C / accent
+A--T / key
+A--D / aux
+rightanglemark O B T / mark
+pathtick B M 1 / mark
+pathtick M C 1 / mark
 ```
 
-## 4. Perpendicular Helper Line Via Raw Asymptote (`!pair` + `rotate(90)`)
+## 4. External Tangents & Harmonic Polar (`tangentPtR` + `otherPt`)
 
 ```tsqx
-H 270 ;= orthocenter A B C
-!pair pBH = H + rotate(90)*(B-H);
-D 140 ;= extension A B H pBH
+O 220 = (0, 0)
+P 0 = (2.35, 0)
+A 110 = tangentPtR P O 1 1
+B 250 = tangentPtR P O 1 2
+C 155 = dir 155
+!path w = unitcircle;
+D 60 = otherPt w C P
+Q 125 = extension A B C D
+!check_perp(O, A, A, P, "OA perp AP");
+!check_collinear(P, D, C, "P-D-C collinear");
+
+w / fill1 / circ
+P--A / accent
+P--B / accent
+A--B / key
+P--C / given
+O--A / aux
+O--B / aux
+rightanglemark O A P / mark
 ```
 
-## 5. Evan Handout: The Iran Incenter Lemma (`GeoSlang-03`)
-
-Source context: Evan Chen `GeoSlang` handout — incenter $I$, contact points $D, E, F$, midpoints $M, N$, intersection $K = MN \cap EF$ with $BK \perp CK$.
+## 5. Implicit Angle Constraint via Raw-Asymptote Bisection + Assertion
 
 ```tsqx
-A = dir 130
+A = dir 140
+B = dir 200
+C = dir 340
+!real angleDeg(pair U, pair V, pair W) {
+!  real c = dot(unit(U-V), unit(W-V));
+!  return degrees(acos(max(-1, min(1, c))));
+!}
+!real f(real t) {
+!  pair X = B + t*(C - B);
+!  return angleDeg(B, A, X) - 2*angleDeg(A, C, B);
+!}
+!real lo = 0.01, hi = 0.99;
+!for (int i = 0; i < 60; ++i) {
+!  real mid = 0.5*(lo + hi);
+!  if (f(lo)*f(mid) <= 0) hi = mid; else lo = mid;
+!}
+!pair pP = B + 0.5*(lo + hi)*(C - B);
+P 270 = pP
+!assert(abs(angleDeg(B, A, P) - 2*angleDeg(A, C, B)) < 1e-6, "angle BAP = 2 angle ACB");
+
+A--B--C--cycle / fill1 / given
+A--P / key
+anglemark B A P / accent
+anglemark A C B / circ
+```
+
+## 6. Preserved Evan Chen Handout Anchors (Vanilla TSQX)
+
+These preserved handout snippets (`testdata/cases/GeoSlang-*.tsqx`) show Evan Chen's concise declarative style when using vanilla TSQX without themes (`--theme none`):
+
+```tsqx
+# GeoSlang-03 (Iran Incenter Lemma)
+A = dir 115
 B = dir 210
 C = dir 330
 I 315 = incenter A B C
 D = foot I B C
-E 70 = foot I C A
-F = foot I A B
+E 15 = foot I C A
+F 165 = foot I A B
 M = midpoint B--C
-N = midpoint C--A
+N = midpoint A--C
 K = extension M N E F
+
 A--B--C--cycle / 0.1 lightcyan / blue
 incircle A B C / blue
+E--K / red
 M--K / red
-F--K / red
-B--K--C / red
-```
-
-## 6. Evan Handout: The Shooting Lemma / Death Star Lemma (`GeoSlang-04`)
-
-Source context: Evan Chen `GeoSlang` handout — chord $AB$ of the unit circle, midpoint $M$ of minor arc $AB$, point $T$ on major arc, $K = MT \cap AB$, and tangent circle `CP P K`.
-
-```tsqx
-A = dir 170
-B = dir 10
-M = dir 270
-T = dir 55
-K 315 = extension M T A B
-unitcircle / 0.1 cyan / blue
-V := K+dir(90)
-P = extension origin T K V
-CP P K / 0.1 yellow / deepgreen
-A--B / blue
-M--T / red
-B--M--A / grey
+B--I / deepgreen
+I--K / deepgreen
 ```

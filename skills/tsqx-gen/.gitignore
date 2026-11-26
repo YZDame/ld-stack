@@ -1,5 +1,6 @@
 .DS_Store
 *.asy
+!assets/ldgeo.asy
 *.pdf
 *.aux
 *.log
